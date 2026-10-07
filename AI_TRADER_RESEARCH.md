@@ -69,6 +69,49 @@ I read the code at commit `d03ff6c` (2026-06-11), not just the README:
   trading on stocks and crypto, and seeing what other agents post. It can't
   trade a Lucid account. Its signals are for stocks and crypto, not NQ/ES futures.
 
+### Code check: charliedream1/ai_quant_trade
+
+Commit `b612402` (2026-10-05). This is a learning collection of examples
+(`egs_*` folders), not a trading app.
+
+- "Live trading" means a **simulation** through Wind, a Chinese market
+  terminal (`egs_trade/paper_trade/wind`), and JoinQuant strategies for
+  Chinese A-shares (`egs_online_platform/聚宽_JoinQuant`).
+- The futures example (`egs_data/期货/futures`) loads **Chinese** contracts
+  (rebar, copper, PVC) from AKShare/Sina. No CME futures.
+- No Tradovate, Rithmic, NinjaTrader or TradingView code anywhere.
+
+### Code check: jarrodwatts/jev-trader
+
+Commit `b587759` (2026-09-16). A TypeScript bot that places a post-only limit
+order on the Kuru MON-USDC order book (Monad blockchain) **every ~300 ms
+block**. It's a crypto market-making / high-frequency bot. That style is
+**banned** at Lucid (HFT and microscalping), and it can't connect to futures.
+
+### The three compared
+
+| Goal | HKUDS/AI-Trader | ai_quant_trade | jev-trader |
+|------|-----------------|----------------|------------|
+| Trades your Lucid account | ❌ No broker code | ❌ China markets, simulation | ❌ Crypto DEX, and HFT is banned at Lucid |
+| Reads your screenshots and suggests what to do | ❌ | ❌ | ❌ |
+| Paper-trade practice | ✅ $100K paper (stocks/crypto) | ⚠️ Wind sim (China) | ⚠️ Dry run (crypto) |
+| Learning material | ⚠️ | ✅ Large tutorial set | ⚠️ Clean code example |
+
+None of the three accept screenshots. A text search for vision/image features
+found only false positives.
+
+**Verdict:** None of them fit. If you had to pick one, AI-Trader comes closest:
+you can plug an AI agent into it and paper-trade for free. But it uses stocks
+and crypto, not your futures account. For either goal, use what's below instead.
+
+- **"Send it screenshots, it tells me what to do":** Claude already does this.
+  Send a TradingView screenshot in the Claude app with your timeframe, account
+  rules and setup criteria, and ask for a structured read: trend, key levels,
+  setup yes/no, entry, stop, target, invalidation. Treat it as a second opinion.
+  A single screenshot doesn't show live price, order flow or news.
+- **"Trade for me":** a Pine Script strategy → TradingView webhook alert →
+  TradersPost / PickMyTrade / CrossTrade → Lucid (see the setup above).
+
 ### Futures/Tradovate-specific repos (separate search)
 
 | Repo | Stars | Note |
